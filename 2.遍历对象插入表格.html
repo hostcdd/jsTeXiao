@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="UTF-8">
+	<title>遍历</title>
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		#box{
+			margin: 60px auto;
+			width: 80%;
+		}
+	</style>
+</head>
+<body>
+	<table class="table table-striped table-bordered" id="box">
+		<thead>
+			<tr>
+				<td>First Name</td>
+				<td>Last Name</td>
+				<td>Username</td>
+			</tr>
+		</thead>
+		<tbody id="tBox">
+			<!-- <tr>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>mdo</td>
+			</tr>
+			<tr>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>fat</td>
+			</tr> -->
+		</tbody>
+	</table>
+	<script>
+	//遍历对象
+	/*
+	var obj = {
+		one:{
+			"firstName":"Mark",
+			"lastName":"Otto",
+			"userName":"mdo"
+		},
+		two:{
+			"firstName":"Jacob",
+			"lastName":"Thornton",
+			"userName":"fat"
+		}
+	}
+	var dom ='';
+	$.each(obj,function(index,value){
+		dom += "<tr><td>"+value.firstName+"</td><td>"+value.lastName+"</td><td>"+value.userName+"</td></tr>";
+		console.log(dom);
+		
+	});
+	$("#tBox").html(dom);
+*/
+	//遍历数组
+	var obj = [
+			{"firstName":"Mark","lastName":"Otto","userName":"mdo"},
+			{"firstName":"Jacob","lastName":"Thornton","userName":"fat"}
+		];
+	var dom ='';
+	$.each(obj,function(index,value){
+		dom += "<tr><td>"+value.firstName+"</td><td>"+value.lastName+"</td><td>"+value.userName+"</td></tr>";
+		console.log(dom);
+		
+	});
+	$("#tBox").html(dom);
+	</script>
+</body>
+</html>
+
+			
