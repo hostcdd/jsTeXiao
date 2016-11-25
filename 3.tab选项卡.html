@@ -66,11 +66,20 @@
 			独家别墅280万 苏州桥2居优惠价248万
 		</p>
 	</section>
+	<input type="text">
 	<script>
 	$(function(){
+		$('header').on('click','div',function(){
+			//先清除所有的
+			$('header').find('div').removeClass('active');
+			$('section').removeClass('sectionActive');
+			//添加样式，显示
+			$(this).addClass('active');
+			$('section').eq($(this).index()).addClass('sectionActive');
+		});
 
-		
 	});
+	
 	</script>
 </body>
 </html>
