@@ -57,7 +57,7 @@
 	  
 	//判断浏览器是否支持FileReader接口  
 	if(typeof FileReader == 'undefined'){  
-	    result.InnerHTML="<p>你的浏览器不支持FileReader接口！</p>";  
+	    result.innerHTML="<p>你的浏览器不支持FileReader接口！</p>";  
 	    //使选择控件不可操作  
 	    file.setAttribute("disabled","disabled");  
 	}  
