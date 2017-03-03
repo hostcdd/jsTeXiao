@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	#province,#city,#square{
+		width: 150px;
+	}
+</style>
+<body  onload="init();">
+	<form name="form1">
+	  所在地区：
+	  <select name="province" id="province" onchange = "select_change(this.selectedIndex)" >
+			<option value="1">选择地区</option>
+	  </select>
+	  城市：
+	  <select name="city" id="city" onchange="select_change_square(this.selectedIndex)">
+			<option value="2">选择城市</option>
+	  </select>
+	  街道: 
+	  <select name="square" id="square" >
+			<option value="">选择街道</option>
+	  </select>
+    </form>
+
+	<script>
+		var arr_province=["北京市","上海市","天津市","河南省","山东省","河北省"];
+		var arr_city=[
+		        ["选择城市"],
+		        ["中关村","海淀区","朝阳区","昌平区","丰台区","大兴区"],
+		        ["宝坻区","浦东新区","长宁区","徐汇区","虹口区","宝山区"],
+		        ["和平区","河东区","河西区","塘沽区","大港区","北辰区"],
+		        ["郑州市","洛阳市","商丘市","开封市","安阳市","濮阳市"],
+		        ["济南市","青岛市","烟台市","德州市"],
+		        ["石家庄","菏泽市","唐山市"],
+		      ];
+		var arr_square = [
+				 
+				 [
+				 	["中关村1","中关村2","中关村3"],
+				 	["海淀区1","海淀区2","海淀区3"],
+				 	["朝阳区1","朝阳区2","朝阳区3"],
+				 	["昌平区1","昌平区2","昌平区3"],
+				 	["丰台区1","丰台区2","丰台区3"],
+				 	["大兴区1","大兴区2","大兴区3"]
+				 ],
+				 [
+				 	["宝坻区1","宝坻区2","宝坻区3"],
+				 	["浦东新区1","浦东新区2","浦东新区3"],
+				 	["长宁区1","长宁区2","长宁区3"],
+				 	["徐汇区1","徐汇区2","徐汇区3"],
+				 	["虹口区1","虹口区2","虹口区3"],
+				 	["宝山区1","宝山区2","宝山区3"]
+				 ],
+				 [
+				 	["和平区1","和平区2","和平区3"],
+				 	["河东区1","河东区2","河东区3"],
+				 	["河西区1","河西区2","河西区3"],
+				 	["塘沽区1","塘沽区2","塘沽区3"],
+				 	["大港区1","大港区2","大港区3"],
+				 	["北辰区1","北辰区2","北辰区3"]
+				 ],
+				 [
+				 	["郑州市1","郑州市2","郑州市3"],
+				 	["洛阳市1","洛阳市2","洛阳市3"],
+				 	["商丘市1","商丘市2","商丘市3"],
+				 	["开封市1","开封市2","开封市3"],
+				 	["安阳市1","安阳市2","安阳市3"],
+				 	["濮阳市1","濮阳市2","濮阳市3"]
+				 ],
+				 [
+				 	["济南市1","济南市2","济南市3"],
+				 	["青岛市1","青岛市2","青岛市3"],
+				 	["烟台市1","烟台市2","烟台市3"],
+				 	["德州市1","德州市2","德州市3"]
+				 ],
+				 [
+				 	["石家庄1","石家庄2","石家庄3"],
+				 	["菏泽市1","菏泽市2","菏泽市3"],
+				 	["唐山市1","唐山市2","唐山市3"]
+				 ]
+
+
+		];
+		
+		function init(){
+			var province = document.getElementById('province');
+			var city = document.getElementById('city');
+			var square = document.getElementById('square');
+			//省份
+			for(var i =0; i<arr_province.length; i++){
+				province.innerHTML += "<option iDex="+i+">"+ arr_province[i]+"</option>";
+			}
+			//城市
+			var index = 0;
+			for(var j =0; j<arr_city[index].length; j++){
+				city.innerHTML += "<option>"+ arr_city[index][j]+"</option>";
+			}
+			/*区域
+			for(var k = 0; k < arr_square[index].length; k++){
+				for (var g = 0; g < arr_square[index][k].length; g++){
+					square.innerHTML += "<option>"+ arr_square[index][k][g]+"</option>";
+				}
+				
+			}*/
+		}
+		//省份事件绑定
+		var Index = 0;		//记住是哪个省
+		function select_change(index){
+			Index = index;
+			city.innerHTML = '';
+			for(var j =0; j<arr_city[index].length; j++){
+				city.innerHTML += "<option>"+ arr_city[index][j]+"</option>";
+			}	
+		}
+		//城市事件绑定
+		function select_change_square(index){
+			square.innerHTML = '';
+			for(var k = 0; k < arr_square[Index-1][index].length; k++){
+				square.innerHTML += "<option>"+ arr_square[Index -1][index][k]+"</option>";
+			}	
+		}
+	</script>
+</body>
+</html>
