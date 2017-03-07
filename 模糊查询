@@ -1,0 +1,52 @@
+/*
+*模糊查询
+*/
+
+
+$('#enterpriseCode').keyup(function(e){
+	//console.log(e.which)
+	var val = $("#enterpriseCode").val();  
+    var myReg = /^[\u4e00-\u9fa5]+$/;   	//判断汉字的正则表达式  
+    
+    //查询开始先清空
+    if(val.length>0){
+    	 $("#enterpriseSelect").find('.serchLi').remove();
+		
+	}else{
+		 $("#enterpriseSelect").find('.serchLi').remove();
+		 $("#enterpriseSelect").hide();
+	}
+
+	 if (myReg.test(val)) {    			//输入的是汉字  
+		  $.ajax({
+				url:$('#getEnterprisePath').val(),
+				method:"POST",
+				data:{
+					partName:val
+				},
+				success:function(data){
+					var result = data.data.beanList;
+					var resultLi ='';
+					for(var i =0; i<result.length; i++){
+						resultLi += "<li class='serchLi'>"+result[i].enterpriseName+"</li>";
+					}
+					 $("#enterpriseSelect").show();	
+					 $("#enterpriseSelect").append(resultLi);
+					 //查询没有结果就隐藏
+					if(result.length == 0){
+						$('#enterpriseSelect').hide();
+					}
+				},
+				error:function(){
+					alert("查询错误！");
+				}
+			});
+	 }  
+	         
+});
+$(document).on('click','.serchLi',function(){
+	var txt = $(this).text();
+	$('#enterpriseCode').val(txt);
+	$('#enterpriseSelect').hide();
+	$("#enterpriseSelect").find('.serchLi').remove();
+});
