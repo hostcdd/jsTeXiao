@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #wrap{
+            padding: 70px;
+            margin: 0 auto;
+        }
+        ul li{
+            list-style-type: none;
+            float: left;
+
+        }
+        #nav{
+            width: 330px;
+            height: 40px;
+        }
+        #nav li{
+            line-height: 40px;
+            background: ;
+            text-align: center;
+            cursor: pointer;
+            width: 80px;
+        }
+        #nav li.active{
+           background: palegreen;
+        }
+        #news li{
+            display: none;
+        }
+        #news li.active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <ul id="nav">
+            <li class="active">新闻一</li>
+            <li>新闻二</li>
+            <li>新闻三</li>
+        </ul>
+        <ul id="news">
+            <li class="active">这个是新闻一</li>
+            <li>这个是新闻二</li>
+            <li>这个是新闻三</li>
+        </ul>
+    </div>
+    <script>
+        let nav = document.getElementById('nav');
+        let nLi = nav.getElementsByTagName('li');
+        let news = document.getElementById('news');
+        let aLi = news.getElementsByTagName('li');
+        const Tab = function (navLi,contentLi) {
+            this.nLi = navLi;
+            this.aLi = contentLi;
+        };
+        Tab.prototype = {
+            click(target,index) {
+                for(let j = 0; j < this.nLi.length; j++){
+                    this.nLi[j].removeAttribute('class','active');
+                    this.aLi[j].removeAttribute('class','active');
+                }
+                target.setAttribute('class','active');
+                aLi[index].setAttribute('class','active');
+            },
+            init() {
+                let obj = this;                //tab实例化对象
+                for(let i = 0; i < this.nLi.length; i++){
+                    this.nLi[i].onclick=function(){
+                        let _this = this;
+                        obj.click(_this,i);    //this当前点击的元素li
+                    }
+                }
+            }
+
+        };
+        let tab = new Tab(nLi,aLi);
+        tab.init();
+
+    </script>
+</body>
+</html>
