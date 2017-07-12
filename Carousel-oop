@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>无缝轮播</title>
+	<script src="https://cdn.bootcss.com/jquery/2.0.1/jquery.js"></script>
+	<style type="text/css">
+		.bg{background: #FFF;}
+		*{margin: 0;padding: 0;}   
+		ol,ul{list-style: none;}
+		 
+		#play{
+			width: 100%;
+			height: 650px;
+			position: relative;
+			overflow: hidden;
+		}
+		#play #ul{
+			position: absolute;
+			 width: 6400px;
+		}
+		#play #ul li{
+			float: left;
+
+		}
+		#play #ul li img{
+			width: 1600px;
+    		height: 650px;
+		}
+		#play #ol{
+			width:200px;
+			position: absolute;
+			top:600px;
+			left:740px;
+		}
+		#play #ol li{
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			float: left;
+			margin-right: 20px;
+			border:1px solid red;
+		}
+		#play #prev{ 
+			display:block;
+			border:none;
+			position: absolute;
+			top:250px;
+			width:30px;
+			font-size: 40px;
+			left:15px;
+			background:rgba(0,0,0,0.5)
+		
+		}
+		#play #next{ 
+			display:block;
+			border:none;
+			position: absolute;
+			top:250px;
+			width:30px;
+			font-size: 40px;
+			right:15px;
+			background:rgba(0,0,0,0.5)
+		
+		}
+	</style>
+</head>
+<body>
+	<div id="play">
+		<!-- 图片 -->
+	    <ul id="ul">
+	        <li><img src="http://pic.sucaibar.com/pic/201311/03/fbd9162fea.jpg" alt=""></li>
+	        <li><img src="http://pic1.win4000.com/wallpaper/c/57849d650ef11.jpg" alt=""></li>
+	        <li><img src="http://img1.91.com/uploads/allimg/130814/32-130Q4164349.jpg" alt=""></li>
+	        <li><img src="http://img.tuku.cn/file_big/201503/d8905515d1c046aeba51025f0ea842f0.jpg" alt=""></li>
+	    </ul>
+	    <!-- 小圆点 -->
+	    <ol id="ol">
+	    	<li class="bg"></li>
+	    	<li></li>
+	    	<li></li>
+	    	<li></li>
+	    </ol>
+	    <!-- 左右按钮 -->
+	    <button id="prev"><</button>
+	    <button id="next">></button>
+    </div>   
+
+
+
+    <script type="text/javascript">
+    /****传统写法
+
+    	var i = 0,
+    		timer = null;
+
+
+		$('#prev').click(function(){
+			i--;
+			move(i)
+
+		})
+		$('#next').click(function(){
+			i++;
+			move(i)
+		})
+    	
+		自动播放
+    	var autoMove = function(){
+    		clearInterval(timer);
+    		timer = setInterval(function(){
+    			i++;
+    			move(i)
+    		
+    		},2000)
+    	}
+    	//autoMove();
+
+    	var move = function(num){
+    		// 最后一张图片
+	        if(i == $('#ul li').length){
+	            i = 0;
+	            $('#ul').stop().animate({left:i*-1600},400);
+	        }
+	        // 第一张图片
+	        if(i < 0 ){
+	            i = $('#ul li').length-1;
+	            $('#ul').stop().animate({left:i*-1600},400);
+	        }
+	        // 移动图片
+	        $('#ul').stop().animate({left:i*-1600},400);
+
+			// 换小点的标记
+	        if(i==($('#ul li').length)){
+	            $('#ol li').eq(0).addClass('bg').siblings().removeClass('bg');
+	        }else{
+	            $('#ol li').eq(i).addClass('bg').siblings().removeClass('bg');
+	        }
+    	}
+    	
+		$('#play').mouseover(function(){
+		        $('#prev').show();
+		        $('#next').show();
+		        clearInterval(timer);
+		}).mouseout(function(){
+		        $('#prev').hide();
+		        $('#next').hide();
+		        //autoMove();
+		    })
+	   // 点击小图标 跳转到指定的页面
+	    $('#ol li').click(function(){
+	        i = $(this).index();   
+	        move(i);
+	    })
+*/
+	  
+
+
+	  var Carousel = function(){
+	  	// this.init();
+	  }
+	  Carousel.prototype = {
+	  	init:function(){
+	  		var _this = this;
+	  		this.i = 0;
+	  		this.timer = null;
+	  		this.autoMove(this.i);
+
+	  		$('#prev').click(function(){
+			 	_this.prev();
+			})
+	  		$('#next').click(function(){
+			 	_this.next();
+			})
+			$('#play').mouseout(function(){
+				_this.autoMove(_this.i);
+			})
+
+	  	},
+	  	move:function(i){	//开始轮播
+			// 最后一张图片
+	        if( i == $('#ul li').length){
+	            this.i = 0;
+	            $('#ul').stop().animate({left:this.i*-1600},400);
+	        }
+	        // 第一张图片
+	        if( i < 0 ){
+	            this.i = $('#ul li').length-1;
+	            $('#ul').stop().animate({left:this.i*-1600},400);
+	        }
+	        // 移动图片
+	        $('#ul').stop().animate({left:this.i*-1600},400);
+
+			// 换小点的标记
+	        if(i==($('#ul li').length)){
+	            $('#ol li').eq(0).addClass('bg').siblings().removeClass('bg');
+	        }else{
+	            $('#ol li').eq(i).addClass('bg').siblings().removeClass('bg');
+	        }
+	  	},
+	  	prev:function(){	//后退按钮
+	  		clearInterval(this.timer);
+			this.i--;
+			this.move(this.i)
+	  	},
+	  	next:function(){	//前进按钮
+	  		clearInterval(this.timer);
+			this.i++;
+		    this.move(this.i)
+	  	},
+	  	autoMove:function(i){	//自动轮播
+			clearInterval(this.timer);
+			var _this = this;
+    		this.timer = setInterval(function(){
+    			_this.i++;
+    			_this.move(_this.i)
+    			console.log(_this.i)
+    	
+    		},2000)
+
+		}
+	  }
+
+	  var play = new Carousel();
+	  play.init();
+
+    </script>
+</body>
+</html>
