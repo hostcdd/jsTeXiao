@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<style>
+*{margin: 0;padding: 0;}
+.table-header{width: 800px;height: 40px;}
+table{width: 100%;}
+th{cursor: pointer;}
+.table-body{width: 800px;height: 400px;overflow: auto;}
+</style>
+</head>
+<body>
+    <div class="table-header">
+        <table>
+            <thead>
+                <tr>
+                    <th>代码</th>
+                    <th>名称</th>
+                    <th>买入时间</th>
+                    <th>买入价</th>
+                    <th>收益率</th>                
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="table-body">
+        <table>
+            <tbody>
+                <tr>
+                    <td>600123</td>
+                    <td>格力电器</td>
+                    <td>20151101</td>
+                    <td>12.6</td>
+                    <td>36.0%</td>
+                </tr>
+                <tr>
+                    <td>600125</td>
+                    <td>海尔电器</td>
+                    <td>20151104</td>
+                    <td>18.9</td>
+                    <td>-3.89%</td>
+                </tr>
+                <tr>
+                    <td>600589</td>
+                    <td>同花顺</td>
+                    <td>20140825</td>
+                    <td>9.36</td>
+                    <td>-20.0%</td>
+                </tr>
+                <tr>
+                    <td>600478</td>
+                    <td>上海机场</td>
+                    <td>20151101</td>
+                    <td>12.6</td>
+                    <td>36.0%</td>
+                </tr>
+                <tr>
+                    <td>600452</td>
+                    <td>兴业银行</td>
+                    <td>20150925</td>
+                    <td>12.64</td>
+                    <td>30.0%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="none"></div>
+	<script type="text/javascript" src='http://s.thsi.cn/js/jquery-1.7.2.min.js'></script>
+	<script type="text/javascript">
+		var flag = 1;
+		
+		$('tr th').click(function () {
+			var oIndex = $(this).index();
+			var newArr = [];		//存放数据比较大小
+
+			if(oIndex == 1){ return }	//不需要比较的，直接return
+
+			 //取出当前列要比较的数据
+			 for(var i =0; i<$('tbody tr').length; i++){
+			 	var tdValue = parseFloat($("tbody tr:eq("+i+") td").eq(oIndex).text());		//取出当前列的数据
+			 	newArr.push(tdValue);
+			 }
+
+			 //比较大小
+			 if(flag == 1){		//从小到大排序
+			 	newArr.sort(function(a,b){
+			 		return a-b;
+			 	})
+			 	flag = 2
+			 } else if(flag = 2){	//从大到小排序
+				newArr.sort(function(a,b){
+			 		return b-a;
+			 	})
+			 	flag = 1
+			 }
+
+	  		var jj = [];
+	        for ( var i = 0; i < newArr.length; i++ ) {
+	            for ( var j = 0; j < $('.table-body tr').length ; j++ ) {
+
+	                var valueText =parseFloat( $('.table-body tr:eq('+j+') td').eq(oIndex).text() );
+
+	                if ( valueText == newArr[i] && $.inArray(j, jj) < 0) {
+	                    jj.push(j);
+	                    $('.none').append($(".table-body tr").eq(j).clone());
+	                }
+	            }
+	        }
+	        $(".table-body tbody").html('').append($('.none').html());
+	        $('.none').html('');
+
+			console.log(newArr)
+			console.log(jj)
+		})
+
+
+
+
+	</script>
+</body>
+</html>
