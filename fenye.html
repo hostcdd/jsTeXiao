@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.1/jquery.js"></script>
+    <style>
+    .paging{
+      display: inline-block;
+      padding-left: 0;
+      margin: 20px auto;
+      border-radius: 4px;
+      width: 100%;
+      text-align: center;
+    }
+    .paging a{
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: #fff;
+        line-height: 25px;
+        margin-right: 6px;
+    }
+    .paging .firstPage,.paging .lastPage{
+        width: 40px;
+    }
+    .paging a.current{
+      background: #2f80de;
+      color: #fff;
+    }
+    .paging a:hover{
+      color: inherit;
+    }
+    .paging a.currentPage{
+      background: #2d82dc;
+      color: #fff;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="paging" id="paging">
+       <a href="###" class="firstPage">首页</a>
+       <a href="###" id="pre"> < </a>
+       <span id="prePoints" style="display: none;">...</span>
+       <p style="display: inline-block" id="numPage">
+           <!--<a href="###" class="currentPage">1</a>-->
+           <!--<a href="###">2</a>-->
+           <!--<a href="###" class="current">3</a>-->
+           <!--<a href="###">4</a>-->
+           <!--<a href="###">5</a>-->
+       </p>
+       <span id="nextPoints">...</span>
+       <a href="###" id="next"> > </a>
+       <a href="###" class="lastPage">尾页</a>
+    </div>
+
+    <script type="text/javascript">
+      let goPage = () => {
+          let $numPage = $('#numPage'),
+            currentPage = 1,           //当前页数
+            accountPage = 15,          //总页数
+            aPage = '';                //最后拼接
+
+          let page = function (currentPage,accountPage) {
+              if (currentPage < 5) {                          //页码小于5
+                for (let i = 1; i <= 5; i++) {
+                  aPage += `<a href="###" data-index="${i}">${i}</a>`;
+                }
+                $numPage.empty().append(aPage);
+                $('#numPage a').eq(currentPage-1).addClass('currentPage');      //给当前页面加样式
+                $('#prePoints').hide();
+              } else {
+                if(currentPage <= accountPage - 2){         //页码大于5
+                  for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+                    aPage += `<a href="###" data-index="${i}">${i}</a>`;
+                  }
+                  $numPage.empty().append(aPage);
+                  $('#numPage a').eq(2).addClass('currentPage');
+                  $('#nextPoints').show();
+                } else {
+                  if(currentPage == (accountPage-1)){         //倒数第二页
+                    $('#numPage a').removeClass('currentPage');
+                    $('#numPage a').eq(3).addClass('currentPage');
+                  }else if(currentPage == accountPage){       //倒数第一页
+                    $('#numPage a').removeClass('currentPage');
+                    $('#numPage a:last').addClass('currentPage');
+                    $('#nextPoints').hide();
+                  }
+                }
+                $('#prePoints').show();
+              }
+          };
+          page(currentPage,accountPage);
+          //分页ajax
+          let promise = function (url) {
+            $.ajax({
+              url:url,
+              type:"POST",
+              data:{
+                currentPage:currentPage,
+              },
+              success:function (data) {
+
+              },
+              error:function () {
+
+              }
+            })
+          };
+
+          //页码点击
+          $numPage.on('click', 'a', function () {
+            currentPage = parseInt($(this).attr('data-index'));
+            aPage = '';
+            //console.log(currentPage);
+            page(currentPage,accountPage);
+          });
+
+          //上一页
+          $('#pre').click(function () {
+            if(currentPage > 1){
+              aPage = '';
+              currentPage--;
+              page(currentPage,accountPage);
+            }else {
+              currentPage = 1;
+            }
+            //console.log(currentPage);
+          });
+
+          //下一页
+          $('#next').click(function () {
+            if(currentPage < accountPage){
+              aPage = '';
+              currentPage++;
+              page(currentPage,accountPage);
+            }else {
+              currentPage = accountPage;
+            }
+            //console.log(currentPage);
+          });
+
+          //首页
+          $('.firstPage').click(function () {
+            aPage = '';
+            currentPage = 1;
+            page(currentPage,accountPage);
+            //console.log(currentPage);
+          });
+          
+          //尾页
+          $('.lastPage').click(function () {
+            currentPage = accountPage;
+            aPage = '';
+            for (let i = accountPage - 4; i <= accountPage; i++) {
+              aPage += `<a href="###" data-index="${i}">${i}</a>`;
+            }
+            $numPage.empty().append(aPage);
+            $('#numPage a:last').addClass('currentPage');
+            $('#prePoints').show();
+            $('#nextPoints').hide();
+            //console.log(currentPage);
+          });
+
+        }
+    goPage();
+    </script>
+  </body>
+</html>
