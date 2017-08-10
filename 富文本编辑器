@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>富文本编辑器</title>
+	<script src="https://cdn.bootcss.com/jquery/1.10.1/jquery.js"></script>
+	<style type="text/css">
+		#wrap{
+			margin:60px auto;
+			width: 400px;
+		}
+		#editor{
+			width: 400px;
+			height: 200px;
+			background: #e0e0e0;
+			display: block;
+			border: none;
+    		margin-top: 10px;
+		}
+
+	</style>
+	<script type="text/javascript">
+		/*加粗*/
+		function setBlod() {
+			document.execCommand ('bold', false, null);
+		}
+		//斜体方法
+        function italic(){
+            document.execCommand('italic',true,null)
+        }
+        //加下划线方法
+        var underline= ()=>{ document.execCommand('underline',true,null)}  
+        //复制方法
+        function copy(){
+            document.execCommand("copy", true, null);
+        }
+        var hiliteColor = ()=>{ document.execCommand('hiliteColor',true,'yellow') }
+	</script>
+</head>
+<body> 
+	<div id="wrap">
+		<button onclick="setBlod();">加粗</button>
+		<button onclick="italic();">斜体</button>
+		<button onclick="underline();">下划线</button>
+		<button onclick="copy();">复制</button>
+		<button onclick="hiliteColor();">加背景色</button>
+		<button>删除</button>
+		
+		 <div contenteditable="true" id="editor" >
+		 选择文本加粗，放开文本不加粗，哈哈哈，haorooms
+		 </div>
+	</div>
+</body>
+</html>
